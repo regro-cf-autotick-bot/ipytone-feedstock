@@ -1,5 +1,5 @@
 {% set name = "ipytone" %}
-{% set version = "0.4.0" %}
+{% set version = "0.4.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 775b2e0a88d8d7afc482d88b4a12e76674d2f0de6a607de7cfe22061515b1f69
+  sha256: b40f2eb1db8ad69bab08469531d586397cc633707fc2a3e15a67a76fab37e62c
 
 build:
   noarch: python
