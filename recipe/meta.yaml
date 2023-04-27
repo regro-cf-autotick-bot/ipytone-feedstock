@@ -31,6 +31,7 @@ test:
   requires:
     - pip
     - pytest
+    - pytest-mock
     - jupyterlab >=3.1,<4
     - m2-grep  # [win]
   imports:
