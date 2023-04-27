@@ -12,14 +12,17 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
+    - hatch-jupyter-builder >=0.8.2
+    - hatch-nodejs-version
+    - hatchling
     - python >=3.6
     - pip
   run:
-    - ipywidgets >=7.6.0
+    - ipywidgets >=7.6.0,<9
     - python >=3.6
     - numpy
     - traittypes
