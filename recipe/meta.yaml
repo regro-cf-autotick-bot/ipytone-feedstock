@@ -1,5 +1,5 @@
 {% set name = "ipytone" %}
-{% set version = "0.4.1" %}
+{% set version = "0.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b40f2eb1db8ad69bab08469531d586397cc633707fc2a3e15a67a76fab37e62c
+  sha256: 34bb7e41af5710cd0308705a455979e4a0ff193fad16815cf4e1f9ba6d2f7ee6
 
 build:
   noarch: python
@@ -18,7 +18,6 @@ requirements:
   host:
     - python >=3.6
     - pip
-    - jupyter-packaging
   run:
     - ipywidgets >=7.6.0
     - python >=3.6
