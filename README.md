@@ -1,11 +1,11 @@
-About ipytone
-=============
+About ipytone-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ipytone-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/benbovy/ipytone
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/ipytone-feedstock/blob/main/LICENSE.txt)
 
 Summary: Interactive audio in Jupyter based on Tone.js
 
