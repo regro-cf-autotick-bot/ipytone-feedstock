@@ -28,15 +28,23 @@ requirements:
     - traittypes
 
 test:
+  requires:
+    - pip
+    - jupyterlab >=3.1,<4
+    - m2-grep  # [win]
   imports:
     - ipytone
   commands:
     - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/extension.js                             # [unix]
     - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/index.js                                 # [unix]
     - test -f ${PREFIX}/share/jupyter/labextensions/ipytone/package.json                            # [unix]
-    - if not exist %PREFIX%\\share\\jupyter\\nbextensions\\ipytone\\extension.js (exit 1)           # [win]
-    - if not exist %PREFIX%\\share\\jupyter\\nbextensions\\ipytone\\index.js (exit 1)               # [win]
-    - if not exist %PREFIX%\\share\\jupyter\\labextensions\\ipytone\\package.json (exit 1)          # [win]
+    - pip check
+    # print them all for debugging
+    - jupyter labextension list
+    # write out lists to grep
+    - jupyter labextension list 1>labextensions 2>&1
+    # check files
+    - grep -iE "ipytone.*OK.*ipytone" labextensions
 
 about:
   home: https://github.com/benbovy/ipytone
@@ -44,6 +52,7 @@ about:
   license_family: BSD
   license_file: LICENSE.txt
   summary: Interactive audio in Jupyter based on Tone.js
+  doc_url: https://ipytone.readthedocs.io
 
 extra:
   recipe-maintainers:
