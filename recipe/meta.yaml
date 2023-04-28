@@ -1,5 +1,5 @@
 {% set name = "ipytone" %}
-{% set version = "0.4.1" %}
+{% set version = "0.5.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,34 +7,49 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b40f2eb1db8ad69bab08469531d586397cc633707fc2a3e15a67a76fab37e62c
+  sha256: c2cf17ec18530e7d1f72011ec089f72396ccf60768fe1b954e0c1094c6d3823f
 
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
+    - hatch-jupyter-builder >=0.8.2
+    - hatch-nodejs-version
+    - hatchling
     - python >=3.6
     - pip
-    - jupyter-packaging
   run:
-    - ipywidgets >=7.6.0
+    - ipywidgets >=7.6.0,<9
     - python >=3.6
     - numpy
     - traittypes
 
 test:
+  requires:
+    - pip
+    - pytest
+    - pytest-mock
+    - jupyterlab >=3.1,<4
+    - m2-grep  # [win]
   imports:
     - ipytone
   commands:
-    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/extension.js                             # [unix]
-    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/index.js                                 # [unix]
-    - test -f ${PREFIX}/share/jupyter/labextensions/ipytone/package.json                            # [unix]
-    - if not exist %PREFIX%\\share\\jupyter\\nbextensions\\ipytone\\extension.js (exit 1)           # [win]
-    - if not exist %PREFIX%\\share\\jupyter\\nbextensions\\ipytone\\index.js (exit 1)               # [win]
-    - if not exist %PREFIX%\\share\\jupyter\\labextensions\\ipytone\\package.json (exit 1)          # [win]
+    - pip check
+    # python tests
+    - pytest -vv --pyargs ipytone
+    # show list of lab extensions for debugging
+    - jupyter labextension list
+    # check ipytone lab extension valid
+    - jupyter labextension list 1>labextensions 2>&1
+    - grep -iE "ipytone.*OK.*ipytone" labextensions
+    # show list of classic notebook extensions for debugging
+    - jupyter nbextension list
+    # check ipytone nbextension files
+    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/extension.js    # [unix]
+    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/index.js        # [unix]
 
 about:
   home: https://github.com/benbovy/ipytone
@@ -42,6 +57,7 @@ about:
   license_family: BSD
   license_file: LICENSE.txt
   summary: Interactive audio in Jupyter based on Tone.js
+  doc_url: https://ipytone.readthedocs.io
 
 extra:
   recipe-maintainers:
