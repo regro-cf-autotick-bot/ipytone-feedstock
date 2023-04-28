@@ -38,13 +38,18 @@ test:
     - ipytone
   commands:
     - pip check
+    # python tests
     - pytest -vv --pyargs ipytone
-    # print them all for debugging
+    # show list of lab extensions for debugging
     - jupyter labextension list
-    # write out lists to grep
+    # check ipytone lab extension valid
     - jupyter labextension list 1>labextensions 2>&1
-    # check files
     - grep -iE "ipytone.*OK.*ipytone" labextensions
+    # show list of classic notebook extensions for debugging
+    - jupyter nbextension list
+    # check ipytone nbextension files
+    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/extension.js    # [unix]
+    - test -f ${PREFIX}/share/jupyter/nbextensions/ipytone/index.js        # [unix]
 
 about:
   home: https://github.com/benbovy/ipytone
