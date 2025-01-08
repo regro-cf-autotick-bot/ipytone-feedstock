@@ -6,12 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: c2cf17ec18530e7d1f72011ec089f72396ccf60768fe1b954e0c1094c6d3823f
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -19,11 +19,11 @@ requirements:
     - hatch-jupyter-builder >=0.8.2
     - hatch-nodejs-version
     - hatchling
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
     - ipywidgets >=7.6.0,<9
-    - python >=3.6
+    - python >={{ python_min }}
     - numpy
     - traittypes
 
@@ -34,6 +34,7 @@ test:
     - pytest-mock
     - jupyterlab >=3.1,<4
     - m2-grep  # [win]
+    - python {{ python_min }}
   imports:
     - ipytone
   commands:
